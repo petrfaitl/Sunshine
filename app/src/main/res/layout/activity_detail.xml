@@ -3,5 +3,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="app.sunshine.android.lonerunner.info.sunshine.DetailActivity"
+    tools:context="info.lonerunner.android.sunshine.app.DetailActivity"
     tools:ignore="MergeRootFrame" />

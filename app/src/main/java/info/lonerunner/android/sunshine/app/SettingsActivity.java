@@ -1,4 +1,4 @@
-package app.sunshine.android.lonerunner.info.sunshine;
+package info.lonerunner.android.sunshine.app;
 
 import android.os.Bundle;
 import android.preference.ListPreference;

@@ -3,11 +3,11 @@
     <!-- These settings headers are only used on tablets. -->
 
     <header
-        android:fragment="app.sunshine.android.lonerunner.info.sunshine.SettingsActivity$GeneralPreferenceFragment"
+        android:fragment="info.lonerunner.android.sunshine.app.SettingsActivity$GeneralPreferenceFragment"
         android:title="@string/pref_header_location" />
 
     <header
-        android:fragment="app.sunshine.android.lonerunner.info.sunshine.SettingsActivity$NotificationPreferenceFragment"
+        android:fragment="info.lonerunner.android.sunshine.app.SettingsActivity$NotificationPreferenceFragment"
         android:title="@string/pref_header_units" />
 
 

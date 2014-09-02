@@ -1,10 +1,10 @@
-package app.sunshine.android.lonerunner.info.sunshine;
+package info.lonerunner.android.sunshine.app;
 
 
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
