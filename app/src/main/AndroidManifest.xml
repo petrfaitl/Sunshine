@@ -41,6 +41,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="info.lonerunner.android.sunshine.app.MainActivity" />
         </activity>
+
+        <provider
+            android:authorities="info.lonerunner.android.sunshine.app"
+            android:name=".data.WeatherProvider" />
     </application>
 
 </manifest>

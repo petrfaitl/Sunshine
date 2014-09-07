@@ -2,7 +2,6 @@
 <resources>
 
     <string name="app_name">Sunshine</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="today">Today - Sunny - 88/63</string>
     <string name="action_refresh">Refresh</string>
@@ -11,6 +10,6 @@
     <string name="data_not_available">No forecast data</string>
     <string name="no_default_maps_app">Install maps application first</string>
     <string name="action_share">Share</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>

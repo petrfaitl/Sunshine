@@ -11,8 +11,9 @@
     <string name="pref_location_default">Tauranga</string>
     <string name="pref_location_key" translatable="false">location</string>
     <string name="pref_temp_units">Temperature units</string>
-    <string name="pref_temp_units_key" translatable="false">temp_units</string>
-    <string name="pref_temp_units_default">Celsius</string>
+    <string name="pref_units_key" translatable="false">temp_units</string>
+    <string name="pref_units_metric">Celsius</string>
+    <string name="pref_units_imperial">Fahrenheit</string>
     <string-array name="pref_temp_units_list">
         <item>Celsius</item>
         <item>Fahrenheit</item>
