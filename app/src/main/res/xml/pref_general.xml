@@ -18,9 +18,9 @@
          dismiss it. -->
     <!-- NOTE: ListPreference's summary should be set to its value by the activity code. -->
     <ListPreference
-        android:key="@string/pref_temp_units_key"
+        android:key="@string/pref_units_key"
         android:title="@string/pref_temp_units"
-        android:defaultValue="@string/pref_temp_units_default"
+        android:defaultValue="@string/pref_units_metric"
         android:entries="@array/pref_temp_units_list"
         android:entryValues="@array/pref_temp_units_list_values"/>
 
