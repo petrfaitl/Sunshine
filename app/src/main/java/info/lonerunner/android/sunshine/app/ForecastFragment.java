@@ -3,6 +3,7 @@ package info.lonerunner.android.sunshine.app;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -74,12 +75,10 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
 
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-
 
 
         mForecastAdapter = new SimpleCursorAdapter(
@@ -98,21 +97,26 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
                 },
                 0
         );
-        //Log.v("Values from content provider", String.valueOf(FORECAST_COLUMNS.length));
 
-        mForecastAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
+
+        mForecastAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder()
+        {
             @Override
-            public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
+            public boolean setViewValue(View view, Cursor cursor, int columnIndex)
+            {
                 boolean isMetric = Utility.isMetric(getActivity());
-                switch (columnIndex) {
+                switch (columnIndex)
+                {
                     case COL_WEATHER_MAX_TEMP:
-                    case COL_WEATHER_MIN_TEMP: {
+                    case COL_WEATHER_MIN_TEMP:
+                    {
                         // we have to do some formatting and possibly a conversion
                         ((TextView) view).setText(Utility.formatTemperature(
                                 cursor.getDouble(columnIndex), isMetric));
                         return true;
                     }
-                    case COL_WEATHER_DATE: {
+                    case COL_WEATHER_DATE:
+                    {
                         String dateString = cursor.getString(columnIndex);
                         TextView dateView = (TextView) view;
                         dateView.setText(Utility.formatDate(dateString));
@@ -131,20 +135,25 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
         forecastList.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg)
             {
+                boolean isMetric = Utility.isMetric(getActivity());
+
+                SimpleCursorAdapter adapter = (SimpleCursorAdapter)adapterView.getAdapter();
+                Cursor cursor = (Cursor)adapter.getItem(position);
+                String date = cursor.getString(COL_WEATHER_DATE);
+                Intent detailActivity = new Intent(getActivity(),DetailActivity.class);
+                detailActivity.putExtra(DetailFragment.DATE,date);
 
 
-
-                /*Intent detailActivity = new Intent(getActivity(),DetailActivity.class);
-                detailActivity.putExtra(Intent.EXTRA_TEXT,forecast);
-                startActivity(detailActivity);*/
+                startActivity(detailActivity);
             }
         });
 
 
         return rootView;
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState)
     {
@@ -155,21 +164,15 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
 
 
-    @Override
-    public void onStart()
-    {
-        super.onStart();
-        updateWeather();
-
-    }
 
     @Override
     public void onResume()
     {
         super.onResume();
-        if (mLocation != null && !mLocation.equals(Utility.getPreferredLocation(getActivity())))
+        if (mLocation != null && !Utility.getPreferredLocation(getActivity()).equals(mLocation))
         {
             getLoaderManager().restartLoader(FORECAST_LOADER, null, this);
+
         }
     }
 
