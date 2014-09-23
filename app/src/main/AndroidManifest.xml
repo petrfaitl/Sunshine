@@ -44,7 +44,9 @@
 
         <provider
             android:authorities="info.lonerunner.android.sunshine.app"
-            android:name=".data.WeatherProvider" />
+            android:name=".data.WeatherProvider"
+            android:enabled="true"
+            android:exported="true"/>
     </application>
 
 </manifest>
