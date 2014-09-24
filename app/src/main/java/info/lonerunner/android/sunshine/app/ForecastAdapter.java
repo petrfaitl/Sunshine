@@ -42,18 +42,26 @@ public class ForecastAdapter extends CursorAdapter
         dateView.setText(Utility.getFriendlyDayString(context,dateString));
 
         // Read weather forecast from cursor
-        //TODO: Read weather forecast from cursor
+        String forecastString = cursor.getString(ForecastFragment.COL_WEATHER_DESC);
 
         // Find TextView and set weather forecast on it
+        TextView forecastView = (TextView)view.findViewById(R.id.list_item_forecast_textview);
+        forecastView.setText(forecastString);
 
         // Read user preference for metric or imperial temperature units
 
+        boolean isMetric = Utility.isMetric(context);
+
         // Read high temperature from cursor
-        // TODO: Find TextView and set formatted high temperature on it
+        double highString = cursor.getDouble(ForecastFragment.COL_WEATHER_MAX_TEMP);
+        TextView highView = (TextView)view.findViewById(R.id.list_item_high_textview);
+        highView.setText(Utility.formatTemperature(highString, isMetric));
 
         // Read low temperature from cursor
 
-        // TODO: Find TextView and set formatted low temperature on i
+        double lowString = cursor.getDouble(ForecastFragment.COL_WEATHER_MIN_TEMP);
+        TextView lowView = (TextView)view.findViewById(R.id.list_item_low_textview);
+        lowView.setText(Utility.formatTemperature(lowString, isMetric));
 
 
     }
