@@ -140,7 +140,7 @@ public class Utility
                 .equals(context.getString(R.string.pref_units_metric));
     }
 
-    static String formatTemperature(double temperature, boolean isMetric)
+    static String formatTemperature(Context context,double temperature, boolean isMetric)
     {
         double temp;
         if (!isMetric)
@@ -150,7 +150,7 @@ public class Utility
         {
             temp = temperature;
         }
-        return String.format("%.0f" + "\u00B0", temp);
+        return context.getString(R.string.format_temperature, temp);
     }
 
     static String formatDate(String dateString)

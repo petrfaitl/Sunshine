@@ -36,12 +36,16 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
     private String mLocation;
 
-    private String[] FORECAST_COLUMNS ={
+    private String[] FORECAST_COLUMNS = {
             WeatherContract.WeatherEntry.TABLE_NAME + "." + WeatherContract.WeatherEntry._ID,
             WeatherContract.WeatherEntry.COLUMN_SHORT_DESC,
             WeatherContract.WeatherEntry.COLUMN_MAX_TEMP,
             WeatherContract.WeatherEntry.COLUMN_MIN_TEMP,
-            WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING
+            WeatherContract.LocationEntry.COLUMN_LOCATION_SETTING,
+            WeatherContract.WeatherEntry.COLUMN_HUMIDITY,
+            WeatherContract.WeatherEntry.COLUMN_DEGREES,
+            WeatherContract.WeatherEntry.COLUMN_PRESSURE,
+            WeatherContract.WeatherEntry.COLUMN_WIND_SPEED,
     };
 
     public DetailFragment()
@@ -64,7 +68,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     }
 
 
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
     {
@@ -79,7 +82,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
         // Return true to display menu
         setShareIntent();
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     private void setShareIntent()
@@ -104,7 +107,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onSaveInstanceState(Bundle outState)
     {
         super.onSaveInstanceState(outState);
-        if(mLocation != null)
+        if (mLocation != null)
         {
             outState.putString(LOCATION_KEY, mLocation);
         }
@@ -115,7 +118,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onActivityCreated(Bundle savedInstanceState)
     {
         super.onActivityCreated(savedInstanceState);
-        if(savedInstanceState != null)
+        if (savedInstanceState != null)
         {
             mLocation = savedInstanceState.getString(LOCATION_KEY);
         }
@@ -128,9 +131,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onResume()
     {
         super.onResume();
-        if(mLocation!= null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
+        if (mLocation != null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
         {
-            getLoaderManager().restartLoader(DETAIL_LOADER,null,this);
+            getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }
 
 
@@ -142,9 +145,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
 
         mLocation = Utility.getPreferredLocation(getActivity());
-        Uri uriWithDate = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation,mReceivedDate);
-
-
+        Uri uriWithDate = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, mReceivedDate);
 
 
         return new CursorLoader(
@@ -160,39 +161,43 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor data)
     {
-        if(!data.moveToFirst())
+        if (!data.moveToFirst())
         {
             return;
         }
-            boolean isMetric = Utility.isMetric(getActivity());
+        boolean isMetric = Utility.isMetric(getActivity());
 
 
+        String mDetailForecast = data.getString(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC));
+        double mDetailMax = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP));
+        double mDetailMin = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP));
+        String dateString = Utility.formatDate(mReceivedDate);
+        String maxTemp = Utility.formatTemperature(getActivity(), mDetailMax, isMetric);
+        String minTemp = Utility.formatTemperature(getActivity(), mDetailMin, isMetric);
+        double humidity = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_HUMIDITY));
+        double pressure = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE));
+        double wind = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED));
+        double degrees = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DEGREES));
+        String humidityString = ;
+        String pressureString = ;
+        String windString= ;
+        String degreesString = ;
+
+        TextView forecastText = (TextView) getView().findViewById(R.id.detail_forecast_text);
+        TextView dateText = (TextView) getView().findViewById(R.id.detail_date_text);
+        TextView minTempText = (TextView) getView().findViewById(R.id.detail_low_text);
+        TextView maxTempText = (TextView) getView().findViewById(R.id.detail_high_text);
+        TextView humidityText =(TextView) getView().findViewById(R.id.humidity);
 
 
+        dateText.setText(dateString);
+        maxTempText.setText(maxTemp);
+        minTempText.setText(minTemp);
+        forecastText.setText(mDetailForecast);
 
-            String mDetailForecast = data.getString(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_SHORT_DESC));
-            double mDetailMax = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MAX_TEMP));
-            double mDetailMin = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_MIN_TEMP));
-            String dateString = Utility.formatDate(mReceivedDate);
-            String maxTemp = Utility.formatTemperature(mDetailMax, isMetric);
-            String minTemp = Utility.formatTemperature(mDetailMin, isMetric);
+        //mForecastString = String.format("%s - %s - %s/%s", dateString, mDetailForecast, maxTemp, minTemp);
 
-
-
-
-            TextView forecastText = (TextView) getView().findViewById(R.id.detail_forecast_text);
-            TextView dateText = (TextView) getView().findViewById(R.id.detail_date_text);
-            TextView minTempText = (TextView) getView().findViewById(R.id.detail_low_text);
-            TextView maxTempText = (TextView) getView().findViewById(R.id.detail_high_text);
-
-
-            dateText.setText(dateString);
-            maxTempText.setText(maxTemp);
-            minTempText.setText(minTemp);
-            forecastText.setText(mDetailForecast);
-            mForecastString = String.format("%s - %s - %s/%s",dateString, mDetailForecast,maxTemp,minTemp);
-
-            //Log.v("forecast string", mForecastString);
+        //Log.v("forecast string", mForecastString);
 
         if (mShareActionProvider != null)
         {
@@ -200,15 +205,12 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         }
 
 
-
-
-
     }
 
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader)
     {
-        getLoaderManager().restartLoader(DETAIL_LOADER,null,this);
+        getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
 
     }
 }
