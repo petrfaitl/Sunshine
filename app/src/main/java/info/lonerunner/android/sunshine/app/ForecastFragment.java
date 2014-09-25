@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
 import java.util.Date;
 
@@ -94,7 +93,7 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             {
                 boolean isMetric = Utility.isMetric(getActivity());
 
-                SimpleCursorAdapter adapter = (SimpleCursorAdapter)adapterView.getAdapter();
+                ForecastAdapter adapter = (ForecastAdapter)adapterView.getAdapter();
                 Cursor cursor = (Cursor)adapter.getItem(position);
                 String date = cursor.getString(COL_WEATHER_DATE);
                 Intent detailActivity = new Intent(getActivity(),DetailActivity.class);
