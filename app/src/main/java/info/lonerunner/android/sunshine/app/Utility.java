@@ -153,6 +153,85 @@ public class Utility
         return context.getString(R.string.format_temperature, temp);
     }
 
+    static String formatPressure(Context context, double pressure)
+    {
+        return context.getString(R.string.format_pressure, pressure);
+    }
+
+    static String formatHumidity(Context context, double humidity)
+    {
+        try
+        {
+            return context.getString(R.string.format_humudity, humidity);
+        }catch(Exception e)
+        {
+            return "Not Available";
+        }
+
+    }
+
+    static String formatWindspeed(Context context, double windspeed)
+    {
+        return context.getString(R.string.format_windspeed, windspeed);
+    }
+
+    static String formatWindDirection(Context context, double degrees)
+    {
+        double upperLimit = 348.75;
+        if(degrees > upperLimit)
+        {
+            degrees = degrees % upperLimit;
+            System.out.println(degrees);
+        }
+
+
+        String [][] degreesTocardinals =
+                              {{"0", "11.25", "N"},
+                               {"11.25", "33.75","NNE"},
+                               {"33.75", "56.25","NE"},
+                               {"56.25", "78.75","ENE"},
+                               {"78.75", "101.25","E"},
+                               {"101.25", "123.75", "ESE"},
+                               {"123.75", "146.25","SE"},
+                               {"146.25", "168.75","SSE"},
+                               {"168.75", "191.25","S"},
+                               {"191.25", "213.75","SSW"},
+                               {"213.75", "236.25", "SW"},
+                               {"236.25", "258.75", "WSW"},
+                               {"258.75", "281.25","W"},
+                               {"281.25", "303.75","WNW"},
+                               {"303.75", "326.25","NW"},
+                               {"326.25", "348.75","NNW"}};
+
+        for(String[] value : degreesTocardinals)
+        {
+            if(isEqualOrGreater(degrees, value[0]) && isSmaller(degrees,value[1]))
+            {
+                return value[2];
+            }
+        }
+        return "";
+
+    }
+
+    static boolean isEqualOrGreater(double degrees, String value)
+    {
+        if(degrees >= Double.parseDouble(value))
+        {
+            return true;
+        }
+        return false;
+    }
+
+    static boolean isSmaller(double degrees, String value)
+    {
+        if(degrees< Double.parseDouble(value))
+        {
+            return true;
+        }
+        return false;
+    }
+
     static String formatDate(String dateString)
     {
         SimpleDateFormat format = new SimpleDateFormat("EEEE dd MMM");
