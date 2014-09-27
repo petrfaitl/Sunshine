@@ -178,22 +178,31 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         double pressure = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE));
         double wind = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED));
         double degrees = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DEGREES));
-        String humidityString = ;
-        String pressureString = ;
-        String windString= ;
-        String degreesString = ;
+        String humidityString = Utility.formatHumidity(getActivity(),humidity);
+        String pressureString = Utility.formatPressure(getActivity(),pressure);
+        String windString= Utility.formatWindspeed(getActivity(),wind);
+        String degreesString = Utility.formatWindDirection(getActivity(),degrees);
 
         TextView forecastText = (TextView) getView().findViewById(R.id.detail_forecast_text);
         TextView dateText = (TextView) getView().findViewById(R.id.detail_date_text);
         TextView minTempText = (TextView) getView().findViewById(R.id.detail_low_text);
         TextView maxTempText = (TextView) getView().findViewById(R.id.detail_high_text);
-        TextView humidityText =(TextView) getView().findViewById(R.id.humidity);
+        TextView humidityText =(TextView) getView().findViewById(R.id.detail_humidity_text);
+        TextView windspeedText = (TextView) getView().findViewById(R.id.detail_windspeed_text);
+        TextView winddirectionText = (TextView) getView().findViewById(R.id.detail_winddirection_text);
+        TextView pressureText = (TextView) getView().findViewById(R.id.detail_winddirection_text);
+
 
 
         dateText.setText(dateString);
         maxTempText.setText(maxTemp);
         minTempText.setText(minTemp);
         forecastText.setText(mDetailForecast);
+        humidityText.setText(humidityString);
+        windspeedText.setText(windString);
+        winddirectionText.setText(degreesString);
+        pressureText.setText(pressureString);
+
 
         //mForecastString = String.format("%s - %s - %s/%s", dateString, mDetailForecast, maxTemp, minTemp);
 

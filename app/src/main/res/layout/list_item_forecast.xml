@@ -26,18 +26,17 @@
             android:orientation="vertical">
 
             <TextView
-                xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/list_item_date_textview"
-                android:text="Tomorrow"/>
+                android:text="@string/today"/>
 
             <TextView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/list_item_forecast_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sunny"/>
+                android:text="Forecast text"/>
 
         </LinearLayout>
      </LinearLayout>
@@ -57,14 +56,14 @@
                 android:id="@+id/list_item_high_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="23"/>
+                android:text="28"/>
 
             <TextView
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:id="@+id/list_item_low_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18"/>
+                android:text="5"/>
 
         </LinearLayout>
 

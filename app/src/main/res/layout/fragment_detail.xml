@@ -21,6 +21,7 @@
 
             <TextView
                 android:id="@+id/detail_date_text"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -43,19 +44,19 @@
                 <TextView
                     android:id="@+id/detail_high_text"
 
+                    style="@android:style/TextAppearance.DeviceDefault.Large"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="28"
-                    style="@android:style/TextAppearance.DeviceDefault.Large"/>
+                    android:text="28"/>
 
 
                 <TextView
                     android:id="@+id/detail_low_text"
 
+                    style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="12"
-                    style="@android:style/TextAppearance.DeviceDefault.Medium"/>
+                    android:text="12"/>
 
             </LinearLayout>
 
@@ -93,34 +94,78 @@
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-            <TextView
+
+                <TextView
+                    android:id="@+id/humidity_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:minHeight="@dimen/activity_vertical_margin"
+                    android:text="@string/humidity"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    android:id="@+id/detail_humidity_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/humidity_label"
+                    android:paddingLeft="@dimen/elements_padding"
+                    android:text="84%"/>
+            </RelativeLayout>
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/activity_vertical_margin"
-                android:text="@string/humidity"
-                android:textAllCaps="true"
-                android:id="@+id/humidity_label"/>
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                android:paddingTop="@dimen/activity_vertical_margin">
+
+                <TextView
+                    android:id="@+id/wind_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/wind"
+                    android:textAllCaps="true"
+                    />
+
+                <TextView
+                    android:id="@+id/detail_windspeed_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/wind_label"
+                    android:paddingLeft="@dimen/elements_padding"
+                    />
+
+                <TextView
+                    android:id="@+id/detail_winddirection_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/detail_windspeed_text"
+                    android:paddingLeft="@dimen/elements_padding"
+                    android:text="N"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="84%"
-                    android:id="@+id/humidity"
-                    android:layout_toRightOf="@id/humidity_label"/>
+                    android:text="@string/pressure"
+                    android:id="@+id/pressure_label"
+                    android:textAllCaps="true"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/detail_pressure_text"
+                    android:layout_toRightOf="@id/pressure_label"
+                    android:paddingLeft="@dimen/elements_padding"
+                    android:text="hPa"/>
+
             </RelativeLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/wind"
-                android:textAllCaps="true"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/pressure"
-                android:textAllCaps="true"/>
         </LinearLayout>
 
     </LinearLayout>
