@@ -91,16 +91,14 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg)
             {
-                boolean isMetric = Utility.isMetric(getActivity());
 
-                ForecastAdapter adapter = (ForecastAdapter)adapterView.getAdapter();
-                Cursor cursor = (Cursor)adapter.getItem(position);
-                String date = cursor.getString(COL_WEATHER_DATE);
-                Intent detailActivity = new Intent(getActivity(),DetailActivity.class);
-                detailActivity.putExtra(DetailFragment.DATE,date);
+                Cursor cursor = mForecastAdapter.getCursor();
+                if (cursor != null && cursor.moveToPosition(position)) {
+                    Intent intent = new Intent(getActivity(), DetailActivity.class)
+                            .putExtra(DetailFragment.DATE, cursor.getString(COL_WEATHER_DATE));
+                    startActivity(intent);
+                }
 
-
-                startActivity(detailActivity);
             }
         });
 

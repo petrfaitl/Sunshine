@@ -17,15 +17,23 @@
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/activity_vertical_margin"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            android:paddingTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/detail_day_text"
+                style="@android:style/TextAppearance.DeviceDefault.Medium"
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/detail_date_text"
                 style="@android:style/TextAppearance.DeviceDefault.Medium"
                 xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Today"/>
+                android:layout_height="wrap_content"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -46,8 +54,7 @@
 
                     style="@android:style/TextAppearance.DeviceDefault.Large"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="28"/>
+                    android:layout_height="wrap_content"/>
 
 
                 <TextView
@@ -55,8 +62,7 @@
 
                     style="@android:style/TextAppearance.DeviceDefault.Medium"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="12"/>
+                    android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
@@ -70,13 +76,13 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_launcher"/>
+                    android:src="@drawable/ic_launcher"
+                    android:id="@+id/detail_icon"/>
 
                 <TextView
                     android:id="@+id/detail_forecast_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sunny"
                     android:textAllCaps="true"/>
             </LinearLayout>
 
@@ -108,8 +114,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/humidity_label"
-                    android:paddingLeft="@dimen/elements_padding"
-                    android:text="84%"/>
+                    android:paddingLeft="@dimen/elements_padding"/>
             </RelativeLayout>
 
             <RelativeLayout
@@ -139,8 +144,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/detail_windspeed_text"
-                    android:paddingLeft="@dimen/elements_padding"
-                    android:text="N"/>
+                    android:paddingLeft="@dimen/elements_padding"/>
 
             </RelativeLayout>
 
@@ -160,8 +164,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/detail_pressure_text"
                     android:layout_toRightOf="@id/pressure_label"
-                    android:paddingLeft="@dimen/elements_padding"
-                    android:text="hPa"/>
+                    android:paddingLeft="@dimen/elements_padding"/>
 
             </RelativeLayout>
 
