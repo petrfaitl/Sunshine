@@ -7,6 +7,7 @@ package info.lonerunner.android.sunshine.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -165,7 +166,7 @@ public class Utility
             return context.getString(R.string.format_humudity, humidity);
         }catch(Exception e)
         {
-            return "Not Available";
+            return context.getString(R.string.humidity_na);
         }
 
     }
@@ -175,7 +176,7 @@ public class Utility
         return context.getString(R.string.format_windspeed, windspeed);
     }
 
-    static String formatWindDirection(Context context, double degrees)
+    static String formatWind(Context context,double windspeed, double degrees)
     {
         double upperLimit = 348.75;
         if(degrees > upperLimit)
@@ -207,29 +208,23 @@ public class Utility
         {
             if(isEqualOrGreater(degrees, value[0]) && isSmaller(degrees,value[1]))
             {
-                return value[2];
+                return new StringBuilder().append(formatWindspeed(context,windspeed)).append(" ").append(value[2]).toString();
             }
         }
-        return "";
+        return formatWindspeed(context,windspeed);
 
     }
 
     static boolean isEqualOrGreater(double degrees, String value)
     {
-        if(degrees >= Double.parseDouble(value))
-        {
-            return true;
-        }
-        return false;
+        return (degrees >= Double.parseDouble(value));
+
     }
 
     static boolean isSmaller(double degrees, String value)
     {
-        if(degrees< Double.parseDouble(value))
-        {
-            return true;
-        }
-        return false;
+        return (degrees< Double.parseDouble(value));
+
     }
 
     static String formatDate(String dateString)
@@ -237,5 +232,60 @@ public class Utility
         SimpleDateFormat format = new SimpleDateFormat("EEEE dd MMM");
         Date date = WeatherContract.getDateFromDb(dateString);
         return format.format(date);
+    }
+
+    public static int getWeatherArt(int forecast)
+    {
+        final Integer [][] FORECAST_ARRAY = {
+                {800,800, R.drawable.art_clear},
+                {801,802, R.drawable.art_light_clouds},
+                {803, 804, R.drawable.art_clouds},
+                {701,762,R.drawable.art_fog},
+                {300,500,R.drawable.art_light_rain},
+                {501,531,R.drawable.art_rain},
+                {600,622,R.drawable.art_snow},
+                {200,232,R.drawable.art_storm},
+
+        };
+
+
+        for(int i=0; i<FORECAST_ARRAY.length;i++)
+        {
+            if (forecast >= FORECAST_ARRAY[i][0] && forecast <= FORECAST_ARRAY[i][1])
+            {
+                return FORECAST_ARRAY[i][2];
+            }
+
+        }
+        return -1;
+
+    }
+
+    public static int getWeatherIcon(int forecast)
+    {
+        final Integer [][] FORECAST_ARRAY = {
+                {800,800, R.drawable.ic_clear},
+                {801,802, R.drawable.ic_light_clouds},
+                {803, 804, R.drawable.ic_cloudy},
+                {701,762,R.drawable.ic_fog},
+                {300,500,R.drawable.ic_light_rain},
+                {501,531,R.drawable.ic_rain},
+                {600,622,R.drawable.ic_snow},
+                {200,232,R.drawable.ic_storm},
+
+        };
+
+
+        for(int i=0; i<FORECAST_ARRAY.length;i++)
+        {
+            if (forecast >= FORECAST_ARRAY[i][0] && forecast <= FORECAST_ARRAY[i][1])
+            {
+
+                return FORECAST_ARRAY[i][2];
+            }
+
+        }
+        return -1;
+
     }
 }

@@ -19,6 +19,7 @@ public class ForecastAdapter extends CursorAdapter
     private static final int VIEW_TYPE_COUNT = 2;
 
 
+
     public static class ViewHolder
     {
         public final ImageView iconView;
@@ -97,9 +98,24 @@ public class ForecastAdapter extends CursorAdapter
         ViewHolder holder = (ViewHolder) view.getTag();
 
 
-        // Use placeholder image for now
+        
+        int weatherCode = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
+        int position = getItemViewType(cursor.getPosition());
 
-        holder.iconView.setImageResource(R.drawable.ic_launcher);
+        switch(position)
+        {
+            case VIEW_TYPE_TODAY:
+            {
+                holder.iconView.setImageResource(Utility.getWeatherArt(weatherCode));
+                break;
+            }
+            default:
+            {
+                holder.iconView.setImageResource(Utility.getWeatherIcon(weatherCode));
+            }
+        }
+
+
 
         // Read date from cursor
         String dateString = cursor.getString(ForecastFragment.COL_WEATHER_DATE);

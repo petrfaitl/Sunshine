@@ -86,7 +86,6 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         mLowTempView = (TextView) rootView.findViewById(R.id.detail_low_text);
         mHumidityView = (TextView) rootView.findViewById(R.id.detail_humidity_text);
         mWindSpeed = (TextView) rootView.findViewById(R.id.detail_windspeed_text);
-        mWindDirection = (TextView) rootView.findViewById(R.id.detail_winddirection_text);
         mPressureView = (TextView) rootView.findViewById(R.id.detail_pressure_text);
 
         return rootView;
@@ -189,7 +188,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     {
         if (data != null && data.moveToFirst())
         {
-            mIconView.setImageResource(R.drawable.ic_launcher);
+            int weatherCode = data.getInt(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WEATHER_ID));
+            mIconView.setImageResource(Utility.getWeatherArt(weatherCode));
 
             // Read date from cursor and update views for day of week and date
             String date = data.getString(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATETEXT));
@@ -222,8 +222,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
             double windSpeedStr = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_WIND_SPEED));
             double windDirStr = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DEGREES));
             //mWindView.setText(Utility.(getActivity(), windSpeedStr, windDirStr));
-            mWindSpeed.setText(getActivity().getString(R.string.format_windspeed, windSpeedStr) );
-            mWindDirection.setText(Utility.formatWindDirection(getActivity(),windDirStr));
+            mWindSpeed.setText(Utility.formatWind(getActivity(),windSpeedStr,windDirStr));
 
             // Read pressure from cursor and update view
             double pressure = data.getDouble(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_PRESSURE));
