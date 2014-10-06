@@ -28,7 +28,9 @@
     <string name="format_pressure">
         <xliff:g id="pressure">PRESSURE: %1.0f</xliff:g>hPa</string>
     <string name="format_windspeed">
-        <xliff:g id="windspeed">WIND: %1.0f</xliff:g>km/h</string>
+        <xliff:g id="windspeed">WIND: %1.0f</xliff:g> km/h</string>
+    <string name="format_windspeed_miles">
+        <xliff:g id="windspeed">WIND: %1.0f</xliff:g> miles/h</string>
     <string name="format_humudity">
         <xliff:g id="humidity">HUMIDITY: %1.0f</xliff:g>\u0025</string>
     <string name="humidity_na">HUMIDITY: N/A</string>

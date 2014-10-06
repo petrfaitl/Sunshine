@@ -7,7 +7,6 @@ package info.lonerunner.android.sunshine.app;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -173,7 +172,15 @@ public class Utility
 
     static String formatWindspeed(Context context, double windspeed)
     {
-        return context.getString(R.string.format_windspeed, windspeed);
+        if(isMetric(context))
+        {
+            return context.getString(R.string.format_windspeed, windspeed);
+        }else
+        {
+            windspeed = windspeed * 0.621371192;
+            return  context.getString(R.string.format_windspeed_miles, windspeed);
+        }
+
     }
 
     static String formatWind(Context context,double windspeed, double degrees)

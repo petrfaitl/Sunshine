@@ -28,7 +28,6 @@ import info.lonerunner.android.sunshine.app.data.WeatherContract;
 public class DetailFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor>
 {
     private static final String SHARED_HASHTAG = "#SunshineApp";
-    private String mReceivedDate;
     private ShareActionProvider mShareActionProvider;
     private static final int DETAIL_LOADER = 0;
     private String mForecastString;
@@ -73,8 +72,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
     {
-        Intent detailIntent = getActivity().getIntent();
-        mReceivedDate = detailIntent.getStringExtra(DATE);
+
 
 
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
@@ -146,7 +144,13 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         {
             mLocation = savedInstanceState.getString(LOCATION_KEY);
         }
-        getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+        Intent intent = getActivity().getIntent();
+        if(intent != null && intent.hasExtra(DATE))
+        {
+            getLoaderManager().initLoader(DETAIL_LOADER, null, this);
+            
+        }
+
 
 
     }

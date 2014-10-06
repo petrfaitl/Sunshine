@@ -98,7 +98,7 @@ public class ForecastAdapter extends CursorAdapter
         ViewHolder holder = (ViewHolder) view.getTag();
 
 
-        
+
         int weatherCode = cursor.getInt(ForecastFragment.COL_WEATHER_ID);
         int position = getItemViewType(cursor.getPosition());
 

@@ -19,7 +19,7 @@ public class DetailActivity extends Activity
         if (savedInstanceState == null)
         {
             getFragmentManager().beginTransaction()
-                    .add(R.id.container, new DetailFragment())
+                    .add(R.id.weather_detail_container, new DetailFragment())
                     .commit();
         }
     }
