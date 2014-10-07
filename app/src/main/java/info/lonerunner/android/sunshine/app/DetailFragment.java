@@ -148,7 +148,7 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         if(intent != null && intent.hasExtra(DATE))
         {
             getLoaderManager().initLoader(DETAIL_LOADER, null, this);
-            
+
         }
 
 
@@ -159,7 +159,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onResume()
     {
         super.onResume();
-        if (mLocation != null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
+        Intent intent = getActivity().getIntent();
+        if (intent != null && intent.hasExtra(DATE) && mLocation != null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
         {
             getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }
@@ -170,10 +171,15 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args)
     {
+        Intent intent = getActivity().getIntent();
+        if (intent == null || !intent.hasExtra(DATE))
+        {
+            return null;
+        }
 
-
+        String receivedDate = getActivity().getIntent().getStringExtra(DATE);
         mLocation = Utility.getPreferredLocation(getActivity());
-        Uri uriWithDate = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, mReceivedDate);
+        Uri uriWithDate = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, receivedDate);
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATETEXT + " ASC";
 
 
@@ -197,8 +203,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
 
             // Read date from cursor and update views for day of week and date
             String date = data.getString(data.getColumnIndex(WeatherContract.WeatherEntry.COLUMN_DATETEXT));
-            String friendlyDateText = Utility.getDayName(getActivity(), mReceivedDate);
-            String dateText = Utility.getFormattedMonthDay(getActivity(), mReceivedDate);
+            String friendlyDateText = Utility.getDayName(getActivity(), date);
+            String dateText = Utility.getFormattedMonthDay(getActivity(), date);
             mFriendlyDateView.setText(friendlyDateText);
             mDateView.setText(dateText);
 
