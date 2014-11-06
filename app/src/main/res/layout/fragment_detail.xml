@@ -60,7 +60,7 @@
                     android:id="@+id/detail_low_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/elements_padding_half"
+                    android:layout_marginLeft="@dimen/elements_padding"
                     android:fontFamily="sans-serif-light"
                     android:textColor="@color/subhead_text"
                     android:textSize="48sp"/>
