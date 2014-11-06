@@ -85,8 +85,8 @@
                     android:id="@+id/detail_forecast_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-light"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:textColor="@color/subhead_text"/>
             </LinearLayout>
 
