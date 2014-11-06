@@ -17,6 +17,7 @@ public class ForecastAdapter extends CursorAdapter
     private final int VIEW_TYPE_TODAY = 0;
     private final int VIEW_TYPE_FUTURE = 1;
     private static final int VIEW_TYPE_COUNT = 2;
+    private boolean mUseTodayLayout;
 
 
 
@@ -72,10 +73,15 @@ public class ForecastAdapter extends CursorAdapter
         return view;
     }
 
+    public void setUseTodayLayout(boolean useTodayLayout)
+    {
+        mUseTodayLayout = useTodayLayout;
+    }
+
     @Override
     public int getItemViewType(int position)
     {
-        if (position == 0)
+        if (position == 0 && mUseTodayLayout)
         {
             return VIEW_TYPE_TODAY;
         } else

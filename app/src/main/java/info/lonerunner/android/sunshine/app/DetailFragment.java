@@ -144,8 +144,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
         {
             mLocation = savedInstanceState.getString(LOCATION_KEY);
         }
-        Intent intent = getActivity().getIntent();
-        if(intent != null && intent.hasExtra(DATE))
+        Bundle arguments = getArguments();
+        if(arguments != null && arguments.containsKey(DetailActivity.DATE_KEY))
         {
             getLoaderManager().initLoader(DETAIL_LOADER, null, this);
 
@@ -159,8 +159,8 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     public void onResume()
     {
         super.onResume();
-        Intent intent = getActivity().getIntent();
-        if (intent != null && intent.hasExtra(DATE) && mLocation != null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
+        Bundle arguments = getArguments();
+        if (arguments != null && arguments.containsKey(DetailActivity.DATE_KEY) && mLocation != null && mLocation.equals(Utility.getPreferredLocation(getActivity())))
         {
             getLoaderManager().restartLoader(DETAIL_LOADER, null, this);
         }
@@ -171,13 +171,9 @@ public class DetailFragment extends Fragment implements LoaderManager.LoaderCall
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args)
     {
-        Intent intent = getActivity().getIntent();
-        if (intent == null || !intent.hasExtra(DATE))
-        {
-            return null;
-        }
 
-        String receivedDate = getActivity().getIntent().getStringExtra(DATE);
+
+        String receivedDate = getArguments().getString(DetailActivity.DATE_KEY);
         mLocation = Utility.getPreferredLocation(getActivity());
         Uri uriWithDate = WeatherContract.WeatherEntry.buildWeatherLocationWithDate(mLocation, receivedDate);
         String sortOrder = WeatherContract.WeatherEntry.COLUMN_DATETEXT + " ASC";

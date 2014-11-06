@@ -3,4 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="elements_padding">8dp</dimen>
+    <dimen name="left_column_margin">60dp</dimen>
+    <dimen name="elements_padding_half">4dp</dimen>
+    <dimen name="text_larger">24sp</dimen>
+
 </resources>

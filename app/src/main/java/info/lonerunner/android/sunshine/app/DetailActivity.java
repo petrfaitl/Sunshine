@@ -10,6 +10,8 @@ import android.view.MenuItem;
 public class DetailActivity extends Activity
 {
 
+    public static final String DATE_KEY = "forecast_date";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -18,8 +20,18 @@ public class DetailActivity extends Activity
         setContentView(R.layout.activity_detail);
         if (savedInstanceState == null)
         {
+
+            String date = getIntent().getStringExtra(DATE_KEY);
+
+            Bundle arguments = new Bundle();
+            arguments.putString(DetailActivity.DATE_KEY,date);
+
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(arguments);
+
             getFragmentManager().beginTransaction()
-                    .add(R.id.weather_detail_container, new DetailFragment())
+                    .add(R.id.weather_detail_container, fragment)
                     .commit();
         }
     }

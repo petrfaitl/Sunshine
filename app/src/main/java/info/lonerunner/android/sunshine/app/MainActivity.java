@@ -10,7 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class MainActivity extends Activity
+public class MainActivity extends Activity implements ForecastFragment.Callback
 {
     private boolean mTwoPane;
 
@@ -36,6 +36,10 @@ public class MainActivity extends Activity
         {
             mTwoPane = false;
         }
+
+        ForecastFragment forecastFragment = (ForecastFragment) getFragmentManager().findFragmentById(R.id.fragment_forecast);
+        forecastFragment.setUseTodayLayout(!mTwoPane);
+
 
 
     }
@@ -101,4 +105,25 @@ public class MainActivity extends Activity
     }
 
 
+    @Override
+    public void onItemSelected(String date)
+    {
+        if(mTwoPane)
+        {
+            Bundle args = new Bundle();
+            args.putString(DetailActivity.DATE_KEY, date);
+
+            DetailFragment fragment = new DetailFragment();
+            fragment.setArguments(args);
+
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.weather_detail_container,fragment)
+                    .commit();
+        }else
+        {
+            Intent intent = new Intent(this, DetailActivity.class)
+                    .putExtra(DetailActivity.DATE_KEY, date);
+            startActivity(intent);
+        }
+    }
 }

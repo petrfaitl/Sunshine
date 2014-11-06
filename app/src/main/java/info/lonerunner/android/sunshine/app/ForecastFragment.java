@@ -3,7 +3,6 @@ package info.lonerunner.android.sunshine.app;
 import android.app.Fragment;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
-import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +22,9 @@ import info.lonerunner.android.sunshine.app.data.WeatherContract;
 import info.lonerunner.android.sunshine.app.data.WeatherContract.LocationEntry;
 import info.lonerunner.android.sunshine.app.data.WeatherContract.WeatherEntry;
 
+
+
+
 /**
  * A placeholder fragment containing a simple view.
  */
@@ -33,6 +35,9 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     private static final int FORECAST_LOADER = 0;
     private String mLocation;
+    private int menuPosition = ListView.INVALID_POSITION;
+    private ListView forecastList;
+    private boolean mUseTodayLayout;
 
     // For the forecast view we're showing only a small subset of the stored data.
     // Specify the columns we need.
@@ -62,6 +67,13 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     public static final int COL_LOCATION_SETTING = 5;
     public static final int COL_WEATHER_ID = 6;
 
+    private static final String POSITION = "position";
+
+    public interface Callback
+    {
+        public void onItemSelected(String date);
+    }
+
 
     public ForecastFragment()
     {
@@ -77,15 +89,21 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
+                             final Bundle savedInstanceState)
     {
+        if(savedInstanceState != null && savedInstanceState.containsKey(POSITION))
+        {
+            menuPosition = savedInstanceState.getInt(POSITION);
+
+        }
 
 
         mForecastAdapter = new ForecastAdapter(getActivity(),null,0);
+        mForecastAdapter.setUseTodayLayout(mUseTodayLayout);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        ListView forecastList = (ListView) rootView.findViewById(R.id.listview_forecast);
+        forecastList = (ListView) rootView.findViewById(R.id.listview_forecast);
         forecastList.setAdapter(mForecastAdapter);
 
         forecastList.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -93,12 +111,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long arg)
             {
+                menuPosition = position;
 
                 Cursor cursor = mForecastAdapter.getCursor();
-                if (cursor != null && cursor.moveToPosition(position)) {
-                    Intent intent = new Intent(getActivity(), DetailActivity.class)
-                            .putExtra(DetailFragment.DATE, cursor.getString(COL_WEATHER_DATE));
-                    startActivity(intent);
+                if (cursor != null && cursor.moveToPosition(position))
+                {
+                    ((Callback)getActivity()).onItemSelected(cursor.getString(COL_WEATHER_DATE));
                 }
 
             }
@@ -164,6 +182,16 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState)
+    {
+        if(menuPosition !=ListView.INVALID_POSITION)
+        {
+            outState.putInt(POSITION, menuPosition);
+        }
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args)
     {
         // This is called when a new Loader needs to be created.  This
@@ -198,6 +226,12 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     {
         mForecastAdapter.swapCursor(data);
 
+        if(menuPosition != ListView.INVALID_POSITION)
+        {
+            forecastList.smoothScrollToPosition(menuPosition);
+        }
+
+
     }
 
     @Override
@@ -205,5 +239,14 @@ public class ForecastFragment extends Fragment implements LoaderManager.LoaderCa
     {
         mForecastAdapter.swapCursor(null);
 
+    }
+
+    public void setUseTodayLayout(boolean useTodayLayout)
+    {
+        mUseTodayLayout = useTodayLayout;
+        if(mForecastAdapter != null)
+        {
+            mForecastAdapter.setUseTodayLayout(useTodayLayout);
+        }
     }
 }
